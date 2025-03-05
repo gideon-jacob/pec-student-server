@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const cors = require('cors');
 const serverless = require('serverless-http');
 
 require('dotenv').config();
@@ -8,7 +9,11 @@ const uri = process.env.MONGODB_URI;
 const port = process.env.PORT || 5000;
 const client = new MongoClient(uri);
 
-app.use(express.json());
+app.use(express.json(), cors());
+
+app.get('/', (req, res) => {
+    res.send({Msg: "Hello, this is base path!"})
+})
 
 app.get('/api/timetable', async (req, res) => { 
     await client.connect()
@@ -50,15 +55,15 @@ app.get('/api/timetable', async (req, res) => {
             throw new Error('Faculty details not found')
         }
         
-        const attandanceInfo = studentDetails.attandanceDetailsList.find(eachSubject => {
+        const attendanceInfo = studentDetails.attendanceDetailsList.find(eachSubject => {
             return (eachSubject.subjectId === subjectId)
         })
         
-        if (attandanceInfo == undefined) {
+        if (attendanceInfo == undefined) {
             throw new Error('Attendance information not found')
         }
 
-        const { attandancePercentage } = attandanceInfo
+        const { attendancePercentage } = attendanceInfo
         
         return ({
             day: timetable.day,
@@ -67,7 +72,7 @@ app.get('/api/timetable', async (req, res) => {
             subjectName: subjectDetails.subjectName,
             subjectType: subjectDetails.subjectType,
             facultyName,
-            attandancePercentage
+            attendancePercentage
         })
     })
     

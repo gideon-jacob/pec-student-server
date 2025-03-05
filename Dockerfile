@@ -1,10 +1,6 @@
-FROM node:22
+FROM public.ecr.aws/lambda/nodejs:22
 
-WORKDIR /app
-COPY package.json ./
-RUN npm install
-
-COPY . ./
+COPY . ${LAMBDA_TASK_ROOT}
 EXPOSE 5000
 
-CMD ["npm", "run","dev"]
+CMD [ "server.handler" ]

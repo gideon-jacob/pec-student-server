@@ -39,7 +39,8 @@
 				"johnpapa.vscode-peacock",
 				"eamodio.gitlens",
 				"mongodb.mongodb-vscode",
-				"humao.rest-client"
+				"humao.rest-client",
+				"Postman.postman-for-vscode"
 			],
 			"settings": {
 				"editor.tabSize": 4,

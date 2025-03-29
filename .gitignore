@@ -1,4 +1,7 @@
+.vscode
+.ignore
 node_modules
-docker-push.txt
 
+*.txt
+*.js
 *.env
